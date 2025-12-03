@@ -5,14 +5,12 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const isProd = mode === "production";
-
   return {
     server: {
       host: "::",
       port: 8081,
     },
-    base: isProd ? "/flowboard/" : "/", // 👈 ONLY for production builds
+    base: "/",
     plugins: [react(), mode === "development" && componentTagger()].filter(
       Boolean
     ),
