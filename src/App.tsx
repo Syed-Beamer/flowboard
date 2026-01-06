@@ -81,8 +81,6 @@ function AppRoutes() {
         <Route path="projects" element={<Projects />} />
         <Route path="projects/:id" element={<ProjectDetail />} />
         <Route path="analytics" element={<Analytics />} />
-        <Route path="help" element={<Help />} />
-        <Route path="help/:articleId" element={<HelpArticle />} />
         <Route path="settings" element={<SettingsLayout />}>
           <Route index element={<Navigate to="profile" replace />} />
           <Route path="profile" element={<Profile />} />
@@ -94,6 +92,9 @@ function AppRoutes() {
           <Route path="integrations" element={<Integrations />} />
         </Route>
       </Route>
+
+      <Route path="/app/help" element={<Help />} />
+      <Route path="/app/help/:articleId" element={<HelpArticle />} />
 
       {/* Redirect root to app */}
       <Route path="/" element={<Navigate to="/app" replace />} />
