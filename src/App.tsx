@@ -31,6 +31,7 @@ import Billing from "@/pages/app/settings/Billing";
 import Security from "@/pages/app/settings/Security";
 import Api from "@/pages/app/settings/Api";
 import Integrations from "@/pages/app/settings/Integrations";
+import HelpArticle from "@/pages/app/HelpArticle";
 
 import NotFound from "./pages/NotFound";
 
@@ -38,15 +39,19 @@ const queryClient = new QueryClient();
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
-  
+
   if (isLoading) {
-    return <div className="flex h-screen items-center justify-center">Loading...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
   }
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
@@ -77,6 +82,7 @@ function AppRoutes() {
         <Route path="projects/:id" element={<ProjectDetail />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="help" element={<Help />} />
+        <Route path="help/:articleId" element={<HelpArticle />} />
         <Route path="settings" element={<SettingsLayout />}>
           <Route index element={<Navigate to="profile" replace />} />
           <Route path="profile" element={<Profile />} />
@@ -91,7 +97,7 @@ function AppRoutes() {
 
       {/* Redirect root to app */}
       <Route path="/" element={<Navigate to="/app" replace />} />
-      
+
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>

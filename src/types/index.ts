@@ -84,10 +84,10 @@ export interface ActivityItem {
 }
 
 export interface HelpArticle {
-  id: string;
+ id: string;
   title: string;
-  content: string;
   category: string;
+  information: string;
 }
 
 export interface Integration {

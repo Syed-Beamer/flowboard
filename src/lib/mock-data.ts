@@ -218,36 +218,102 @@ export const mockActivities: ActivityItem[] = [
 
 export const mockHelpArticles: HelpArticle[] = [
   {
-    id: 'article-1',
-    title: 'How to create a project',
-    content: 'Projects are the foundation of Flowboard. To create a new project, click the "New Project" button on the Projects page. Fill in the project name, description, and set the priority level. You can also assign an owner and set a start date.',
-    category: 'Getting Started',
+    id: "article-1",
+    title: "How projects work in Flowboard",
+    category: "Getting Started",
+    information: `
+Projects are the primary organizational unit in Flowboard. Every task, timeline, and collaboration event exists within the context of a project. A project represents a real-world initiative such as a product launch, internal migration, customer onboarding flow, or marketing campaign.
+
+When a project is created, it is assigned an owner. The owner is responsible for maintaining project structure, updating priorities, and ensuring tasks move forward. Ownership does not restrict collaboration—any team member with sufficient permissions can contribute—but it provides accountability.
+
+Projects support prioritization levels (Low, Medium, High), which are used by the dashboard and analytics views to surface critical work. Changing a project’s priority does not affect task-level priority automatically; tasks remain independently configurable to avoid unintended workflow disruption.
+
+Projects can exist in one of three states: Active, Archived, or Deleted. Active projects are editable and appear across dashboards. Archived projects are read-only and excluded from most views but preserved for historical reference and reporting. Deleted projects are permanently removed and cannot be restored.
+
+Projects do not enforce a strict workflow by default. This is intentional—Flowboard allows teams to adapt task structure organically. Teams that require stricter workflows can enable custom workflows on higher plans.
+
+From an AI assistant perspective, projects act as context boundaries. Suggestions, summaries, and recommendations should always be scoped to the currently active project unless explicitly stated otherwise.
+`,
   },
+
   {
-    id: 'article-2',
-    title: 'How to invite teammates',
-    content: 'Collaboration is key! Navigate to Settings > Team to invite new members. Click "Invite Teammate", enter their email address, select their role (Admin, Member, or Viewer), and optionally add a personal message. They will receive an invitation email.',
-    category: 'Team Management',
+    id: "article-2",
+    title: "Inviting teammates and collaboration rules",
+    category: "Team Management",
+    information: `
+Flowboard is designed for collaborative work across teams of varying sizes. Team members are invited at the workspace level, not per project. Once invited, a member can be added to multiple projects without needing additional invitations.
+
+There are three core roles: Admin, Member, and Viewer. Admins have full access to workspace settings, billing, security, and integrations. Members can create and manage projects and tasks but cannot modify billing or security settings. Viewers have read-only access and cannot make changes.
+
+Invitations are sent via email and remain valid until accepted or revoked. If an invited user does not join, their invitation does not consume a paid seat. Seats are only counted once a user accepts an invitation.
+
+Removing a team member immediately revokes access but does not delete their historical contributions. Tasks they owned remain assigned to them until reassigned manually. This prevents accidental loss of ownership context.
+
+Flowboard does not currently support granular per-project permission overrides. This is a deliberate design choice to keep permission logic predictable and avoid complex access conflicts. Enterprise plans may support advanced access controls.
+
+For AI assistance, role awareness is critical. The assistant should avoid suggesting actions a user is not permitted to perform, such as billing changes for non-admins, and should adjust guidance accordingly.
+`,
   },
+
   {
-    id: 'article-3',
-    title: 'Understanding billing & plans',
-    content: 'Flowboard offers three plans: Free, Pro, and Enterprise. The Free plan includes basic features for small teams. Pro unlocks advanced analytics, unlimited projects, and priority support. Enterprise adds SSO, dedicated support, and custom integrations.',
-    category: 'Billing',
+    id: "article-3",
+    title: "Task lifecycle and status management",
+    category: "Projects",
+    information: `
+Tasks represent the smallest unit of work in Flowboard. Each task belongs to exactly one project and progresses through a defined lifecycle. By default, tasks move through Backlog, In Progress, and Done, but this can be customized depending on plan and team needs.
+
+Task status is intentionally lightweight. Changing a task’s status does not trigger automatic side effects such as reassignment or notifications unless configured via integrations. This ensures teams maintain full control over how work progresses.
+
+Tasks can have assignees, due dates, descriptions, and comments. Assignees are responsible for execution, but tasks remain visible to the entire project team. Due dates are advisory and used for reminders and dashboard insights rather than enforcement.
+
+A task marked as Done is considered complete but not immutable. Tasks can be reopened if additional work is required. This flexibility reflects real-world workflows where requirements evolve.
+
+Flowboard avoids rigid task hierarchies. While tasks can reference related work, there is no strict parent-child dependency enforcement. This reduces complexity and prevents blocked workflows.
+
+From an AI standpoint, task status is a key signal. Recommendations, summaries, and alerts should prioritize tasks that are overdue, high priority, or stuck in In Progress for extended periods.
+`,
   },
+
   {
-    id: 'article-4',
-    title: 'Managing tasks effectively',
-    content: 'Tasks help you break down projects into manageable pieces. Each task can have a status (Backlog, In Progress, Done), assignee, and description. Use the task list view to quickly update statuses and reassign work.',
-    category: 'Projects',
+    id: "article-4",
+    title: "Billing model and plan behavior",
+    category: "Billing",
+    information: `
+Flowboard uses a subscription-based billing model tied to the workspace. Billing is managed exclusively by Admin users to prevent accidental changes and ensure financial accountability.
+
+Plans are billed per active seat. A seat is considered active when a user has accepted an invitation. Pending invitations do not count toward billing. Removing a user frees up a seat immediately.
+
+Plan upgrades take effect instantly, unlocking features without requiring a reload or restart. Downgrades are scheduled to take effect at the end of the current billing cycle to prevent data loss or sudden feature removal.
+
+Invoices are generated automatically at the start of each billing period. Payment failures may result in temporary feature restrictions but do not immediately suspend access. Admins are notified to resolve payment issues.
+
+Flowboard does not delete data upon downgrade. Features may become inaccessible, but underlying data is preserved in case of a future upgrade.
+
+For AI assistance, billing guidance must be cautious. The assistant should explain implications clearly, avoid making billing changes autonomously, and always confirm intent before guiding users toward plan changes.
+`,
   },
+
   {
-    id: 'article-5',
-    title: 'Setting up integrations',
-    content: 'Connect Flowboard with your favorite tools. Go to Settings > Integrations to enable connections with Slack, HubSpot, Intercom, and Segment. Each integration can be configured with custom settings.',
-    category: 'Integrations',
+    id: "article-5",
+    title: "How integrations interact with Flowboard data",
+    category: "Integrations",
+    information: `
+Integrations extend Flowboard by connecting it with external systems such as Slack, Intercom, HubSpot, and analytics platforms. Integrations operate at the workspace level and require Admin permissions to configure.
+
+Each integration has a defined scope. For example, Slack integrations primarily handle notifications, while CRM integrations focus on data synchronization. Integrations do not have unrestricted access to all workspace data.
+
+Flowboard follows a pull-and-push hybrid model. Some integrations push events in real time (e.g., task updates to Slack), while others pull data periodically based on configuration.
+
+Disconnecting an integration immediately stops data flow but does not delete previously synced data. This ensures historical records remain intact for reporting and audits.
+
+Rate limits and API quotas are respected to avoid performance degradation. If an integration fails due to external service issues, Flowboard retries automatically and surfaces errors to Admins when intervention is required.
+
+AI assistants should treat integrations as secondary actors. Recommendations involving integrations should explain consequences clearly and avoid assumptions about external system state unless confirmed.
+`,
   },
 ];
+
+
 
 export const mockIntegrations: Integration[] = [
   {

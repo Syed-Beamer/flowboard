@@ -1,17 +1,24 @@
-import { useState } from 'react';
-import { Search, BookOpen, ChevronRight } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { mockHelpArticles } from '@/lib/mock-data';
+import { useState } from "react";
+import { Search, BookOpen, ChevronRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { mockHelpArticles } from "@/lib/mock-data";
+import { Link } from "react-router-dom";
 
 export default function Help() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredArticles = mockHelpArticles.filter(
     (article) =>
       article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      article.content.toLowerCase().includes(searchQuery.toLowerCase())
+      article.information.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const categories = [...new Set(mockHelpArticles.map((a) => a.category))];
@@ -22,7 +29,8 @@ export default function Help() {
       <div className="text-center max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold text-foreground">Help Center</h1>
         <p className="mt-2 text-muted-foreground">
-          Find answers to common questions and learn how to make the most of Flowboard
+          Find answers to common questions and learn how to make the most of
+          Flowboard
         </p>
       </div>
 
@@ -41,7 +49,10 @@ export default function Help() {
       </div>
 
       {/* Categories */}
-      <div className="flex flex-wrap justify-center gap-2" data-uf-anchor="help-categories">
+      <div
+        className="flex flex-wrap justify-center gap-2"
+        data-uf-anchor="help-categories"
+      >
         {categories.map((category) => (
           <Badge
             key={category}
@@ -55,31 +66,40 @@ export default function Help() {
       </div>
 
       {/* Articles */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-uf-anchor="help-articles">
+      <div
+        className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+        data-uf-anchor="help-articles"
+      >
         {filteredArticles.map((article) => (
-          <Card
+          <Link
             key={article.id}
-            className="cursor-pointer hover:shadow-md transition-shadow"
-            data-uf-anchor={`help-article-${article.id}`}
+            to={`/app/help/${article.id}`}
+            className="block"
+            data-uf-anchor={`help-article-link-${article.id}`}
           >
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 mb-3">
-                  <BookOpen className="h-5 w-5 text-primary" />
+            <Card
+              className="cursor-pointer hover:shadow-md transition-shadow"
+              data-uf-anchor={`help-article-${article.id}`}
+            >
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 mb-3">
+                    <BookOpen className="h-5 w-5 text-primary" />
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
                 </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground" />
-              </div>
-              <CardTitle className="text-lg">{article.title}</CardTitle>
-              <CardDescription className="line-clamp-2">
-                {article.content}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Badge variant="outline" className="text-xs">
-                {article.category}
-              </Badge>
-            </CardContent>
-          </Card>
+                <CardTitle className="text-lg">{article.title}</CardTitle>
+                <CardDescription className="line-clamp-2">
+                  {article.information.trim().slice(0, 120) + "..."}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Badge variant="outline" className="text-xs">
+                  {article.category}
+                </Badge>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
 
